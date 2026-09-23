@@ -1,26 +1,144 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
+/* ─── Dark-mode class variant (shadcn class-based) ───────────────────────── */
+@custom-variant dark (&:is(.dark *));
+
+/* ─── Design tokens ─────────────────────────────────────────────────────── */
+/*
+  Single `:root` block — dark values only.
+  The app is dark-only: `class="dark"` is hardcoded on <html>,
+  so `dark:*` Tailwind utilities are always active.
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Background layers */
+  --bg-base:     #080809;
+  --bg-surface:  #111114;
+  --bg-elevated: #18181c;
+  --bg-subtle:   #1e1e23;
+
+  /* Borders */
+  --border-default: #2a2a30;
+  --border-subtle:  #3a3a42;
+
+  /* Text */
+  --text-primary:   #f0f0f4;
+  --text-secondary: #c0c0cc;
+  --text-muted:     #808090;
+  --text-faint:     #505060;
+
+  /* Brand / Accent */
+  --accent-primary:     #00c8d4;
+  --accent-primary-dim: rgba(0, 200, 212, 0.12);
+  --accent-ai:          #6457f9;
+  --accent-ai-text:     #8b82ff;
+
+  /* State */
+  --state-error:   #ff4d4f;
+  --state-success: #34d399;
+  --state-warning: #fbbf24;
+
+  /* ── shadcn semantic tokens — mapped to app palette ───────────────────── */
+  --background:          var(--bg-base);
+  --foreground:          var(--text-primary);
+
+  --card:                var(--bg-surface);
+  --card-foreground:     var(--text-primary);
+
+  --popover:             var(--bg-elevated);
+  --popover-foreground:  var(--text-primary);
+
+  --primary:             var(--accent-primary);
+  --primary-foreground:  #080809;
+
+  --secondary:           var(--bg-subtle);
+  --secondary-foreground: var(--text-primary);
+
+  --muted:               var(--bg-elevated);
+  --muted-foreground:    var(--text-muted);
+
+  --accent:              var(--accent-primary-dim);
+  --accent-foreground:   var(--accent-primary);
+
+  --destructive:         var(--state-error);
+
+  --border:              var(--border-default);
+  --input:               var(--border-default);
+  --ring:                var(--accent-primary);
+
+  /* Radius scale used by shadcn components */
+  --radius:    0.75rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
+/* ─── Tailwind v4 theme mapping ─────────────────────────────────────────── */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  /* Fonts */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* App-level background utilities:  bg-base, bg-surface, bg-elevated, bg-subtle */
+  --color-base:     var(--bg-base);
+  --color-surface:  var(--bg-surface);
+  --color-elevated: var(--bg-elevated);
+  --color-subtle:   var(--bg-subtle);
+
+  /* App-level text utilities:  text-copy-primary, text-copy-secondary, … */
+  --color-copy-primary:   var(--text-primary);
+  --color-copy-secondary: var(--text-secondary);
+  --color-copy-muted:     var(--text-muted);
+  --color-copy-faint:     var(--text-faint);
+
+  /* App-level border utilities:  border-surface-border, border-subtle-border */
+  --color-surface-border: var(--border-default);
+  --color-subtle-border:  var(--border-subtle);
+
+  /* App-level brand utilities:  text-brand, bg-brand, border-brand */
+  --color-brand:      var(--accent-primary);
+  --color-accent-dim: var(--accent-primary-dim);
+
+  /* AI accent utilities:  text-ai, bg-ai, text-ai-text */
+  --color-ai:      var(--accent-ai);
+  --color-ai-text: var(--accent-ai-text);
+
+  /* State utilities:  text-error, text-success, text-warning */
+  --color-error:   var(--state-error);
+  --color-success: var(--state-success);
+  --color-warning: var(--state-warning);
+
+  /* shadcn semantic utilities (bg-background, text-foreground, etc.) */
+  --color-background:          var(--background);
+  --color-foreground:          var(--foreground);
+  --color-card:                var(--card);
+  --color-card-foreground:     var(--card-foreground);
+  --color-popover:             var(--popover);
+  --color-popover-foreground:  var(--popover-foreground);
+  --color-primary:             var(--primary);
+  --color-primary-foreground:  var(--primary-foreground);
+  --color-secondary:           var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted:               var(--muted);
+  --color-muted-foreground:    var(--muted-foreground);
+  --color-accent:              var(--accent);
+  --color-accent-foreground:   var(--accent-foreground);
+  --color-destructive:         var(--destructive);
+  --color-border:              var(--border);
+  --color-input:               var(--input);
+  --color-ring:                var(--ring);
+
+  /* Radius */
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* ─── Base layer ─────────────────────────────────────────────────────────── */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-geist-sans), sans-serif;
 }
